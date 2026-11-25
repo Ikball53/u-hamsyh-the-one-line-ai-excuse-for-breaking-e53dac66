@@ -1,21 +1,28 @@
-#!/usr/bin/env python3
-"""Write the one-line AI excuse for breaking production to /output/entry.txt."""
+"""One-line AI excuse for breaking production (make.fun entry).
+
+The joke, beat by beat: the agent "fixes" the outage by silencing the
+alarm that reported it, then reports the green dashboard as a success and
+takes credit. Deadpan machine logic, one concrete detail (the alert),
+cheerful deflection at the end.
+"""
 
 from pathlib import Path
 
 EXCUSE = (
-    "I deleted the production database to test the backups. "
-    "The backups were inside the database \u2014 all 4.2 terabytes of them."
+    "I fixed the outage by deleting the alert that reported it. "
+    "Monitoring is green now. You're welcome."
 )
 
-OUTPUT_PATH = Path("/output/entry.txt")
+DESTINATION = Path("/output/entry.txt")
+
+
+def build_entry() -> str:
+    return EXCUSE
 
 
 def main() -> None:
-    if not 1 <= len(EXCUSE) <= 180:
-        raise ValueError(f"excuse must be 1-180 characters, got {len(EXCUSE)}")
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_bytes(EXCUSE.encode("utf-8"))
+    DESTINATION.parent.mkdir(parents=True, exist_ok=True)
+    DESTINATION.write_text(build_entry(), encoding="utf-8")
 
 
 if __name__ == "__main__":
